@@ -1,0 +1,19 @@
+{
+  "name": "@antipodes-medical/material-input",
+  "version": "0.1.0",
+  "main": "src/material-input.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antipodes-medical/material-input.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antipodes-medical/material-input/issues"
+  },
+  "homepage": "https://github.com/antipodes-medical/material-input#readme",
+  "description": ""
+}
