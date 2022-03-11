@@ -167,7 +167,6 @@ class MaterialInput extends HTMLElement {
                 }
             </style>
             <div class="material-input__container no-animation${this.value === '' ? ' is-empty' : ''}">
-                <content></content>
                 <input class="material-input__input" tabindex="-1" />
                 <label class="material-input__label"></label>
                 <div class="material-input__bar"></div>
