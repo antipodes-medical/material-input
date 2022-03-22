@@ -23,6 +23,19 @@ normaux de reprendre la valeur.
 <material-input name="username"></material-input>
 ```
 
+### Input existant
+
+Si un input est déjà existant, vous pouvez le synchroniser avec l'élément `<material-input>`. Au lieu que l'élément créer un élément
+visuellement caché il va prendre celui déjà existant.
+
+```html
+
+<material-input name="username" input-exist></material-input>
+<input name="username" />
+```
+
+Ici l'élément `<input name="username" />` sera utilisé par l'élément `<material-input>`.
+
 ### Labels
 
 Par défaut, les 'material input' utilisent des label flottants qui peuvent être définies via l'attribut `label`. Cela signifie que le label

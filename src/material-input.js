@@ -184,17 +184,30 @@ class MaterialInput extends HTMLElement {
       'autocomplete',
       'autovalidate'
     ];
+
+    if (this.hasAttribute('input-exist')) {
+      this.$hiddenInput = document.querySelector(`input[name=${this.getAttribute('name')}], textarea[name=${this.getAttribute('name')}]`);
+      this.$hiddenInput.classList.add('material-input__hidden-input');
+      this.$hiddenInput.setAttribute('tabindex', '-1');
+      this.$hiddenInput.style.cssText = `pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: ${this.offsetTop
+                                                                                                                                      + this.offsetHeight}px; left: ${this.offsetLeft}px;`;
+
+      // add hidden input
+      this.after(this.$hiddenInput.parentNode.classList.contains('wpcf7-form-control-wrap') ? this.$hiddenInput.parentNode : this.$hiddenInput);
+    } else {
+      // add hidden input
+      this.insertAdjacentHTML(
+        'afterend',
+        //@formatter:off
+        `<input tabindex="-1" class="material-input__hidden-input" style="pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: ${this.offsetTop + this.offsetHeight}px; left: ${this.offsetLeft}px;" name="${this.getAttribute(
+          //@formatter:on
+          'name')}"/>`
+      );
+      this.$hiddenInput = document.querySelector(`.material-input__hidden-input[name=${this.getAttribute('name')}]`);
+    }
+
     // set tab index to make element focussable
     this.setAttribute('tabindex', '0');
-    // add hidden input
-    this.insertAdjacentHTML(
-      'afterend',
-      //@formatter:off
-      `<input tabindex="-1" class="material-input__hidden-input" style="pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: ${this.offsetTop + this.offsetHeight}px; left: ${this.offsetLeft}px;" name="${this.getAttribute(
-        //@formatter:on
-        'name')}"/>`
-    );
-    this.$hiddenInput = document.querySelector(`.material-input__hidden-input[name=${this.getAttribute('name')}]`);
     // elements
     this.$container = this.shadowRoot.querySelector('.material-input__container');
     this.$input = this.$container.querySelector('.material-input__input');
