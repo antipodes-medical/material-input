@@ -186,7 +186,7 @@ class MaterialInput extends HTMLElement {
     ];
 
     if (this.hasAttribute('input-exist')) {
-      this.$hiddenInput = document.querySelector(`input[name=${this.getAttribute('name')}], textarea[name=${this.getAttribute('name')}]`);
+      this.$hiddenInput = this.parentNode.querySelector(`input[name=${this.getAttribute('name')}], textarea[name=${this.getAttribute('name')}]`);
       this.$hiddenInput.classList.add('material-input__hidden-input');
       this.$hiddenInput.setAttribute('tabindex', '-1');
       this.$hiddenInput.style.cssText = `pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: ${this.offsetTop
@@ -203,7 +203,7 @@ class MaterialInput extends HTMLElement {
           //@formatter:on
           'name')}"/>`
       );
-      this.$hiddenInput = document.querySelector(`.material-input__hidden-input[name=${this.getAttribute('name')}]`);
+      this.$hiddenInput = this.parentNode.querySelector(`.material-input__hidden-input[name=${this.getAttribute('name')}]`);
     }
 
     // set tab index to make element focussable
@@ -453,4 +453,6 @@ class MaterialInput extends HTMLElement {
   }
 }
 
-customElements.define('material-input', MaterialInput);
+document.addEventListener('DOMContentLoaded', () => {
+  customElements.define('material-input', MaterialInput);
+});
