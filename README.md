@@ -108,18 +108,28 @@ cela signifie qu'un champ sans règles de validation sera toujours valide et rec
 material-input.some-class {
     /* the text color of the input */
     --material-input-text-color: black;
+    
+    /* the padding of the input */
+    --material-input-text-padding: 1.4em 1em .6em 10px;
+
     /* the text color of the placeholder or the floating label on an empty field */
     --material-input-placeholder-color: grey;
+
     /* the color of the border and label when the field is focused */
     --material-input-highlight-color: indigo;
+
     /* the color of the border and label when the field is in an invalid state */
     --material-input-invalid-color: red;
+
     /* the color of the border and label when the field is in a valid state */
     --material-input-valid-color: green;
+
     /* the default color of the bottom border */
     --material-input-border-color: orange;
+
     /* the height of the bottom border when the field is not focused */
     --material-input-line-height: 1px;
+
     /* the height of the bottom border when the field is focused */
     --material-input-highlight-line-height: 3px;
 }
