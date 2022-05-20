@@ -89,7 +89,7 @@ class MaterialInput extends HTMLElement {
                     font-size: inherit;
                     pointer-events: none;
                     position: absolute;
-                    left: 10px;
+                    left: var(--material-input-placeholder-left, 10px);
                     top: 1.42em;
                     transition: 0.2s ease all;
                 }
