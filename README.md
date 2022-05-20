@@ -132,5 +132,8 @@ material-input.some-class {
 
     /* the height of the bottom border when the field is focused */
     --material-input-highlight-line-height: 3px;
+    
+    /* The placeholder left */
+    --material-input-placeholder-left: 10px;
 }
 ```
