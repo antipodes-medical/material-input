@@ -276,7 +276,7 @@ class MaterialInput extends HTMLElement {
    */
 	_getHiddenInputCss() {
 		//@formatter:off
-		return `pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; top: ${this.offsetTop + this.offsetHeight}px; left: ${this.offsetLeft}px;`;
+		return `pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; display: none; position: absolute; top: ${this.offsetTop + this.offsetHeight}px; left: ${this.offsetLeft}px;`;
 		//@formatter:on
 	}
 
