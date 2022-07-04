@@ -43,6 +43,7 @@ class MaterialInput extends HTMLElement {
                     position: relative;
                     background-color: transparent;
                     font-size: 1em;
+										font-family: var(--material-input-font-family, inherit);
                     color: var(--material-input-text-color, black);
                     padding: var(--material-input-text-padding, 1.4em 1em .6em 10px);
                     display: block;
@@ -62,6 +63,7 @@ class MaterialInput extends HTMLElement {
                 }
                 /* placeholder and placeholder fade on focus */
                 .material-input__input::-webkit-input-placeholder {
+										font-family: var(--material-input-font-family, inherit);
                     color: var(--material-input-placeholder-color, rgb(134,142,150));
                     opacity: 1;
                 }
@@ -70,6 +72,7 @@ class MaterialInput extends HTMLElement {
                     transition: opacity .35s ease;
                 }
                 .material-input__input::-moz-placeholder {
+										font-family: var(--material-input-font-family, inherit);
                     color: var(--material-input-placeholder-color, rgb(134,142,150));
                     opacity: 1;
                 }
@@ -78,6 +81,7 @@ class MaterialInput extends HTMLElement {
                     transition: opacity .35s ease;
                 }
                 .material-input__input:-ms-input-placeholder {
+										font-family: var(--material-input-font-family, inherit);
                     color: var(--material-input-placeholder-color, rgb(134,142,150));
                     opacity: 1;
                 }
