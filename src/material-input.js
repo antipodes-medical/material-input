@@ -96,7 +96,7 @@ class MaterialInput extends HTMLElement {
                     pointer-events: none;
                     position: absolute;
                     left: var(--material-input-placeholder-left, 10px);
-                    top: 1.42em;
+                    top: var(--material-input-placeholder-top, 1.42em);
                     transition: 0.2s ease all;
                 }
                 .material-input__container.no-animation .material-input__label,

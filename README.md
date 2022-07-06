@@ -138,5 +138,8 @@ material-input.some-class {
     
     /* The placeholder left */
     --material-input-placeholder-left: 10px;
+    
+    /* The placeholder top */
+    --material-input-placeholder-top: 1.42em;
 }
 ```
