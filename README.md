@@ -108,7 +108,7 @@ cela signifie qu'un champ sans règles de validation sera toujours valide et rec
 material-input.some-class {
     /* the font family of the input */
     --material-input-font-family: inherit;
-    
+
     /* the text color of the input */
     --material-input-text-color: black;
     
