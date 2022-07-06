@@ -106,6 +106,9 @@ cela signifie qu'un champ sans règles de validation sera toujours valide et rec
 ```css
 /* select your specific input or all */
 material-input.some-class {
+    /* the font family of the input */
+    --material-input-font-family: inherit;
+    
     /* the text color of the input */
     --material-input-text-color: black;
     
@@ -135,5 +138,8 @@ material-input.some-class {
     
     /* The placeholder left */
     --material-input-placeholder-left: 10px;
+    
+    /* The placeholder top */
+    --material-input-placeholder-top: 1.42em;
 }
 ```
