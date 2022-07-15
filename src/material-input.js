@@ -47,6 +47,7 @@ class MaterialInput extends HTMLElement {
                     color: var(--material-input-text-color, black);
                     padding: var(--material-input-text-padding, 1.4em 1em .6em 10px);
                     display: block;
+                    border-radius: 0;
                     width: 100%;
                     border: none;
                     border-bottom: var(--material-input-line-height, 1px) solid var(--material-input-border-color, rgb(206,212,218));
