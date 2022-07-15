@@ -106,12 +106,18 @@ cela signifie qu'un champ sans règles de validation sera toujours valide et rec
 ```css
 /* select your specific input or all */
 material-input.some-class {
-    /* the font family of the input */
-    --material-input-font-family: inherit;
+    /* the text font family of the input */
+    --material-input-text-font-family: inherit;
+
+    /* the text letter spacing of the input */
+    --material-input-text-letter-spacing: inherit;
+
+    /* the text font weight of the input */
+    --material-input-text-font-weight: inherit;
 
     /* the text color of the input */
     --material-input-text-color: black;
-    
+
     /* the padding of the input */
     --material-input-text-padding: 1.4em 1em .6em 10px;
 
@@ -135,10 +141,10 @@ material-input.some-class {
 
     /* the height of the bottom border when the field is focused */
     --material-input-highlight-line-height: 3px;
-    
+
     /* The placeholder left */
     --material-input-placeholder-left: 10px;
-    
+
     /* The placeholder top */
     --material-input-placeholder-top: 1.42em;
 }
