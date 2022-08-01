@@ -142,7 +142,6 @@ class MaterialInput extends HTMLElement {
                 }
                 /* bar */
                 .material-input__bar{
-                    position:relative;
                     display:block;
                     width:100%;
                 }
