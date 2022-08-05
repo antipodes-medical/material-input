@@ -42,7 +42,7 @@ class MaterialInput extends HTMLElement {
                     box-sizing: border-box;
                     position: relative;
                     background-color: transparent;
-                    font-size: 1em;
+                    font-size: var(--material-input-text-font-size, inherit);
 										font-family: var(--material-input-text-font-family, inherit);
 										letter-spacing: var(--material-input-text-letter-spacing, inherit);
 										font-weight: var(--material-input-text-font-weight, inherit);

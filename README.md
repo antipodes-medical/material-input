@@ -109,6 +109,9 @@ material-input.some-class {
     /* the text font family of the input */
     --material-input-text-font-family: inherit;
 
+    /* the text font size of the input */
+    --material-input-text-font-size: inherit;
+
     /* the text letter spacing of the input */
     --material-input-text-letter-spacing: inherit;
 
