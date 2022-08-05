@@ -55,6 +55,12 @@ class MaterialInput extends HTMLElement {
                     border-bottom: var(--material-input-line-height, 1px) solid var(--material-input-border-color, rgb(206,212,218));
                     box-shadow: none;
                 }
+                /* Prevent iOS from zooming in on input fields */
+                @supports (-webkit-touch-callout: none) {
+                  .material-input__input {
+                    font-size: initial !important;
+                  }
+                }
                 .material-input__container.invalid .material-input__input{
                     border-bottom-color: var(--material-input-invalid-color, rgb(224,49,49));
                 }
