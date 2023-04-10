@@ -152,18 +152,18 @@ class MaterialInput extends HTMLElement {
                 .material-input__container.is-empty .material-input__input[placeholder]:focus ~ .material-input__label{
                     color: var(--material-input-highlight-color, rgb(54,79,199));
                 }
-                .material-input__invalid-icone,
-                .material-input__valid-icone,
+                .material-input__invalid-icon,
+                .material-input__valid-icon,
                 .material-input__invalid-text {
                   display: none;
                 }
-                .material-input__valid-icone {
+                .material-input__valid-icon {
                   position: absolute;
                   right: 0;
                   top: 50%;
                 }
 
-                .material-input__invalid-icone {
+                .material-input__invalid-icon {
                   position: absolute;
                   right: 0;
                   top: calc(50% - 8px);
@@ -176,7 +176,7 @@ class MaterialInput extends HTMLElement {
                     color: var(--material-input-invalid-color, rgb(224,49,49));
                 }
                 .material-input__container.invalid  .material-input__invalid-text,
-                .material-input__container.invalid  .material-input__invalid-icone {
+                .material-input__container.invalid  .material-input__invalid-icon {
                     display: block;
                     color: var(--material-input-invalid-color, rgb(224,49,49));
                 }
@@ -190,7 +190,7 @@ class MaterialInput extends HTMLElement {
                 .material-input__container.is-empty.valid .material-input__input[placeholder] ~ .material-input__label{
                     color: var(--material-input-valid-color, rgb(47,158,68));
                 }
-                .material-input__container.valid .material-input__valid-icone {
+                .material-input__container.valid .material-input__valid-icon {
                     display: block;
                 }
                 /* Help text */
@@ -270,14 +270,14 @@ class MaterialInput extends HTMLElement {
                 }
             </style>
             <div class="material-input__container no-animation${this.value === '' ? ' is-empty' : ''}">
-                <input class="material-input__input" tabindex="-1" />
-                <label class="material-input__label"></label>
-                <div class="material-input__bar"></div>
-                <div class="material-input__message"></div>
-                <div class="material-input__help-text"></div>
-                <div class="material-input__valid-icone"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3701_119054)"><path d="M4.99998 8L6.99998 10L11 6M14.6666 8C14.6666 11.6819 11.6819 14.6667 7.99998 14.6667C4.31808 14.6667 1.33331 11.6819 1.33331 8C1.33331 4.3181 4.31808 1.33334 7.99998 1.33334C11.6819 1.33334 14.6666 4.3181 14.6666 8Z" stroke="#3A9C17" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_3701_119054"><rect width="16" height="16" fill="white"/></clipPath></defs></svg></div>
-                <div class="material-input__invalid-icone"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3701_119079)"><path d="M7.99998 5.33333V8M7.99998 10.6667H8.00665M14.6666 8C14.6666 11.6819 11.6819 14.6667 7.99998 14.6667C4.31808 14.6667 1.33331 11.6819 1.33331 8C1.33331 4.3181 4.31808 1.33333 7.99998 1.33333C11.6819 1.33333 14.6666 4.3181 14.6666 8Z" stroke="#F04438" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_3701_119079"><rect width="16" height="16" fill="white"/></clipPath></defs></svg></div>
-                <div class="material-input__invalid-text"></span>
+                <input class="material-input__input" tabindex="-1" part="input" />
+                <label class="material-input__label" part="label"></label>
+                <div class="material-input__bar" part="bar"></div>
+                <div class="material-input__message" part="message"></div>
+                <div class="material-input__help-text" part="help-text"></div>
+                <div class="material-input__valid-icon" part="valid-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3701_119054)"><path d="M4.99998 8L6.99998 10L11 6M14.6666 8C14.6666 11.6819 11.6819 14.6667 7.99998 14.6667C4.31808 14.6667 1.33331 11.6819 1.33331 8C1.33331 4.3181 4.31808 1.33334 7.99998 1.33334C11.6819 1.33334 14.6666 4.3181 14.6666 8Z" stroke="#3A9C17" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_3701_119054"><rect width="16" height="16" fill="white"/></clipPath></defs></svg></div>
+                <div class="material-input__invalid-icon" part="invalid-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3701_119079)"><path d="M7.99998 5.33333V8M7.99998 10.6667H8.00665M14.6666 8C14.6666 11.6819 11.6819 14.6667 7.99998 14.6667C4.31808 14.6667 1.33331 11.6819 1.33331 8C1.33331 4.3181 4.31808 1.33333 7.99998 1.33333C11.6819 1.33333 14.6666 4.3181 14.6666 8Z" stroke="#F04438" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_3701_119079"><rect width="16" height="16" fill="white"/></clipPath></defs></svg></div>
+                <div class="material-input__invalid-text" part="invalid-text""></span>
             </div>
         `;
     this.attributesExceptions = [
