@@ -115,7 +115,19 @@ class MaterialInput extends HTMLElement {
                     position: absolute;
                     left: var(--material-input-placeholder-left, 10px);
                     top: var(--material-input-placeholder-top, 1.42em);
+                    display: flex;
+                    align-items: start;
+                    gap: 5px;
                     transition: 0.2s ease all;
+                }
+                .material-input__label svg{
+                  pointer-events: all;
+                  cursor: pointer;
+                  opacity: 1;
+                  transition: 0.1s all;
+                }
+                .material-input__label svg path {
+                  stroke: var(--material-input--svg-stroke, #ff0000);
                 }
                 .material-input__container.no-animation .material-input__label,
                 .material-input__container.label-always-floats .material-input__label{
@@ -130,6 +142,11 @@ class MaterialInput extends HTMLElement {
                 .material-input__container.label-always-floats .material-input__label{
                     top: .6em;
                     font-size: .75em;
+                }
+                .material-input__input:focus ~ .material-input__label svg,
+                .material-input__container:not(.is-empty) .material-input__label svg,
+                .material-input__container.label-always-floats .material-input__label svg{
+                    opacity: 0;
                 }
                 .material-input__input:focus ~ .material-input__label,
                 .material-input__container.is-empty .material-input__input[placeholder]:focus ~ .material-input__label{
@@ -149,6 +166,42 @@ class MaterialInput extends HTMLElement {
                 .material-input__container.is-empty.valid .material-input__input[placeholder] ~ .material-input__label{
                     color: var(--material-input-valid-color, rgb(47,158,68));
                 }
+                /* Help text */
+                .material-input__help-text {
+                  display: none;
+                  max-width: var(--help-text--max-width, 300px);
+                  padding: var(--help-text--padding, 12px);
+                  background: #ffffff;
+                  border-radius: var(--help-text--border-radius, 8px);
+                  position: absolute;
+                  z-index: 1;
+                  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+                  left: var(--help-text--left, 49px);
+                  bottom: var(--help-text--bottom, 40px);
+                  font-weight: var(--help-text--font-weight, 400);
+                  font-size: var(--help-text--font-size, 0.75rem);
+                  line-height: var(--help-text--line-height, 1.5);
+                  color: var(--help-text--color, #000);
+                }
+
+                .material-input__help-text::after {
+                  content: '';
+                  position: absolute;
+                  width: var(--help-text-after--width, 12px);
+                  height: var(--help-text-after--height, 12px);
+                  bottom: var(--help-text-after--bottom, -6px);
+                  left: var(--help-text-after--left, 14px);
+                  background: #FFFFFF;
+                  border-radius: 1px;
+                  transform: rotate(45deg);
+                }
+
+                .material-input__input:focus ~ .material-input__help-text,
+                .material-input__container:not(.is-empty) .material-input__help-text,
+                .material-input__container.label-always-floats .material-input__help-text{
+                    display: none;
+                }
+
                 /* bar */
                 .material-input__bar{
                     display:block;
@@ -194,6 +247,7 @@ class MaterialInput extends HTMLElement {
                 <label class="material-input__label"></label>
                 <div class="material-input__bar"></div>
                 <div class="material-input__message"></div>
+                <div class="material-input__help-text"></div>
             </div>
         `;
     this.attributesExceptions = [
@@ -240,6 +294,7 @@ class MaterialInput extends HTMLElement {
     this.$input = this.$container.querySelector('.material-input__input');
     this.$label = this.$container.querySelector('.material-input__label');
     this.$message = this.$container.querySelector('.material-input__message');
+    this.$helpText = this.$container.querySelector('.material-input__help-text');
     this.$form = this._getParentForm(this);
     //
     this.validity = this.hasAttribute('valid') ? true : this.hasAttribute('invalid') ? false : undefined;
@@ -254,6 +309,8 @@ class MaterialInput extends HTMLElement {
     this._setPlaceholder(this.getAttribute('placeholder'));
     this._setValid(this.validity);
     this._setMessage(this.getAttribute('message'));
+    this._setHelpText(this.getAttribute('help-text'));
+    this._showHelpText();
     // remove no-animation loading class
     setTimeout(() => {
       this.$container.classList.remove('no-animation');
@@ -270,7 +327,8 @@ class MaterialInput extends HTMLElement {
       'label': this._setLabel,
       'placeholder': this._setPlaceholder,
       'name': this._setName,
-      'message': this._setMessage
+      'message': this._setMessage,
+      'help-text': this._setHelpText
     };
     // call callback if it exists
     if (callbacks.hasOwnProperty(attrName)) {
@@ -297,7 +355,7 @@ class MaterialInput extends HTMLElement {
    */
   _getHiddenInputCss() {
     //@formatter:off
-		return `pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; position: absolute; margin-top: -${this.hostMarginsVertical}; left: ${this.offsetLeft}px;`;
+		return `pointer-events: none; margin:0; border: 0; height: 0; opacity: 0; display: none; position: absolute; top: ${this.offsetTop + this.offsetHeight}px; left: ${this.offsetLeft}px;`;
 		//@formatter:on
   }
 
@@ -306,7 +364,7 @@ class MaterialInput extends HTMLElement {
    */
   _addEvents() {
     // on focuse pass to input
-    this.addEventListener('focus', () => {
+    this.addEventListener('focus', (e) => {
       this.$input.focus();
     });
     // set validation status when hiddenInput is invalid
@@ -393,6 +451,13 @@ class MaterialInput extends HTMLElement {
   }
 
   /**
+   * set help Text
+   */
+  _setHelpText(msg) {
+    this.$helpText.innerHTML = msg;
+  }
+
+  /**
    * set name
    */
   _setName(newName) {
@@ -460,7 +525,12 @@ class MaterialInput extends HTMLElement {
    */
   _setLabel(label) {
     if (label !== undefined && label !== null) {
-      this.$label.innerHTML = label;
+      if (this.getAttribute('help-text')) {
+        this.$label.innerHTML = '<span>' + label + '</span>' + '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_4803_197240)"><path d="M6.06 6.00004C6.21674 5.55449 6.5261 5.17878 6.93331 4.93946C7.34051 4.70015 7.81927 4.61267 8.28479 4.69252C8.75031 4.77236 9.17255 5.01439 9.47672 5.37573C9.78089 5.73706 9.94737 6.19439 9.94667 6.66671C9.94667 8.00004 7.94667 8.66671 7.94667 8.66671M8 11.3334H8.00667M14.6667 8.00004C14.6667 11.6819 11.6819 14.6667 8 14.6667C4.3181 14.6667 1.33334 11.6819 1.33334 8.00004C1.33334 4.31814 4.3181 1.33337 8 1.33337C11.6819 1.33337 14.6667 4.31814 14.6667 8.00004Z" stroke="#9A814C" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_4803_197240"><rect width="16" height="16" fill="white"/></clipPath></defs></svg>';
+      }
+      else {
+        this.$label.innerHTML = label;
+      }
       return label;
     }
     this.$label.innerHTML = '';
@@ -488,6 +558,41 @@ class MaterialInput extends HTMLElement {
     } else {
       el.classList.remove(cls);
     }
+  }
+
+  /**
+   * since classList.toggle with a second param is not supported in IE11 and below
+   */
+  _showHelpText() {
+    const el = this.$label.querySelector('svg');
+    const helpText = this.$helpText;
+    const input = this.$input;
+
+    if(!el) {
+      return;
+    }
+
+    //Show hidden DIV on hover
+    el.addEventListener('mouseover', function handleMouseOver() {
+      input.disabled = true;
+      helpText.style.display = 'block';
+    });
+
+    //Hide DIV on mouse out
+    el.addEventListener('mouseout', function handleMouseOut() {
+      input.disabled = false;
+      helpText.style.display = 'none';
+    });
+
+    el.addEventListener("touchstart", function handleMouseOver() {
+      input.disabled = true;
+      helpText.style.display = 'block';
+    });
+    el.addEventListener("touchend", function handleMouseOut() {
+      input.disabled = false;
+      helpText.style.display = 'none';
+    });
+
   }
 }
 
