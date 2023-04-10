@@ -50,7 +50,7 @@ class MaterialInput extends HTMLElement {
 										letter-spacing: var(--material-input-text-letter-spacing, inherit);
 										font-weight: var(--material-input-text-font-weight, inherit);
                     color: var(--material-input-text-color, black);
-                    padding: var(--material-input-text-padding, 1.4em 1em .6em 10px);
+                    padding: var(--material-input-text-padding, 1.4em 1em .6em 0px);
                     display: block;
                     border-radius: 0;
                     width: 100%;
@@ -113,7 +113,7 @@ class MaterialInput extends HTMLElement {
                     font-size: inherit;
                     pointer-events: none;
                     position: absolute;
-                    left: var(--material-input-placeholder-left, 10px);
+                    left: var(--material-input-placeholder-left, 0px);
                     top: var(--material-input-placeholder-top, 1.42em);
                     display: flex;
                     align-items: start;
@@ -127,7 +127,7 @@ class MaterialInput extends HTMLElement {
                   transition: 0.1s all;
                 }
                 .material-input__label svg path {
-                  stroke: var(--material-input--svg-stroke, #ff0000);
+                  stroke: var(--material-input--svg-stroke, #3e36c7);
                 }
                 .material-input__container.no-animation .material-input__label,
                 .material-input__container.label-always-floats .material-input__label{
@@ -152,6 +152,22 @@ class MaterialInput extends HTMLElement {
                 .material-input__container.is-empty .material-input__input[placeholder]:focus ~ .material-input__label{
                     color: var(--material-input-highlight-color, rgb(54,79,199));
                 }
+                .material-input__invalid-icone,
+                .material-input__valid-icone,
+                .material-input__invalid-text {
+                  display: none;
+                }
+                .material-input__valid-icone {
+                  position: absolute;
+                  right: 0;
+                  top: 50%;
+                }
+
+                .material-input__invalid-icone {
+                  position: absolute;
+                  right: 0;
+                  top: calc(50% - 8px);
+                }
                 /* errror state */
                 .material-input__container.invalid.label-always-floats .material-input__label,
                 .material-input__container.invalid .material-input__input:focus ~ .material-input__label,
@@ -159,12 +175,23 @@ class MaterialInput extends HTMLElement {
                 .material-input__container.is-empty.invalid .material-input__input[placeholder] ~ .material-input__label{
                     color: var(--material-input-invalid-color, rgb(224,49,49));
                 }
+                .material-input__container.invalid  .material-input__invalid-text,
+                .material-input__container.invalid  .material-input__invalid-icone {
+                    display: block;
+                    color: var(--material-input-invalid-color, rgb(224,49,49));
+                }
+                .material-input__container.invalid .material-input__bar {
+                    display: none;
+                }
                 /* valid state */
                 .material-input__container.valid.label-always-floats .material-input__label,
                 .material-input__container.valid .material-input__input:focus ~ .material-input__label,
                 .material-input__container.is-empty.valid .material-input__input[placeholder]:focus ~ .material-input__label,
                 .material-input__container.is-empty.valid .material-input__input[placeholder] ~ .material-input__label{
                     color: var(--material-input-valid-color, rgb(47,158,68));
+                }
+                .material-input__container.valid .material-input__valid-icone {
+                    display: block;
                 }
                 /* Help text */
                 .material-input__help-text {
@@ -248,6 +275,9 @@ class MaterialInput extends HTMLElement {
                 <div class="material-input__bar"></div>
                 <div class="material-input__message"></div>
                 <div class="material-input__help-text"></div>
+                <div class="material-input__valid-icone"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3701_119054)"><path d="M4.99998 8L6.99998 10L11 6M14.6666 8C14.6666 11.6819 11.6819 14.6667 7.99998 14.6667C4.31808 14.6667 1.33331 11.6819 1.33331 8C1.33331 4.3181 4.31808 1.33334 7.99998 1.33334C11.6819 1.33334 14.6666 4.3181 14.6666 8Z" stroke="#3A9C17" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_3701_119054"><rect width="16" height="16" fill="white"/></clipPath></defs></svg></div>
+                <div class="material-input__invalid-icone"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3701_119079)"><path d="M7.99998 5.33333V8M7.99998 10.6667H8.00665M14.6666 8C14.6666 11.6819 11.6819 14.6667 7.99998 14.6667C4.31808 14.6667 1.33331 11.6819 1.33331 8C1.33331 4.3181 4.31808 1.33333 7.99998 1.33333C11.6819 1.33333 14.6666 4.3181 14.6666 8Z" stroke="#F04438" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_3701_119079"><rect width="16" height="16" fill="white"/></clipPath></defs></svg></div>
+                <div class="material-input__invalid-text"></span>
             </div>
         `;
     this.attributesExceptions = [
@@ -295,6 +325,7 @@ class MaterialInput extends HTMLElement {
     this.$label = this.$container.querySelector('.material-input__label');
     this.$message = this.$container.querySelector('.material-input__message');
     this.$helpText = this.$container.querySelector('.material-input__help-text');
+    this.$invalidText = this.$container.querySelector('.material-input__invalid-text');
     this.$form = this._getParentForm(this);
     //
     this.validity = this.hasAttribute('valid') ? true : this.hasAttribute('invalid') ? false : undefined;
@@ -310,6 +341,7 @@ class MaterialInput extends HTMLElement {
     this._setValid(this.validity);
     this._setMessage(this.getAttribute('message'));
     this._setHelpText(this.getAttribute('help-text'));
+    this._setInvalidText(this.getAttribute('invalid-text'));
     this._showHelpText();
     // remove no-animation loading class
     setTimeout(() => {
@@ -328,7 +360,8 @@ class MaterialInput extends HTMLElement {
       'placeholder': this._setPlaceholder,
       'name': this._setName,
       'message': this._setMessage,
-      'help-text': this._setHelpText
+      'help-text': this._setHelpText,
+      'invalid-text': this._setInvalidText
     };
     // call callback if it exists
     if (callbacks.hasOwnProperty(attrName)) {
@@ -455,6 +488,13 @@ class MaterialInput extends HTMLElement {
    */
   _setHelpText(msg) {
     this.$helpText.innerHTML = msg;
+  }
+
+  /**
+   * set help Text
+   */
+  _setInvalidText(msg) {
+    this.$invalidText.innerHTML = msg;
   }
 
   /**
