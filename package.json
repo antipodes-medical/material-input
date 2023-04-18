@@ -1,6 +1,6 @@
 {
   "name": "@antipodes-medical/material-input",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "main": "src/material-input.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
