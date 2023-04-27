@@ -211,6 +211,10 @@ class MaterialInput extends HTMLElement {
                   color: var(--help-text--color, #000);
                 }
 
+                .material-input__container.invalid .material-input__help-text {
+                  bottom: var(--help-text--invalid-bottom, 56px);
+                }
+
                 .material-input__help-text::after {
                   content: '';
                   position: absolute;
